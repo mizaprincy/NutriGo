@@ -1,0 +1,32 @@
+enum RecommendationType {
+  DAILY
+  WEEKLY
+}
+
+model UserPreferences {
+  user_preferences_id Int   @id @default(autoincrement())
+  vegetarian          Boolean
+  vegan               Boolean
+  halal               Boolean
+  intolerances        String?
+  ingredients_to_avoid String?
+  recommendation_type RecommendationType?
+  user_id             Int   @unique
+  user                User     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  intolerancesList    Intolerance[]
+  avoidIngredients    IngredientToAvoid[]
+}
+
+model Intolerance {
+  id                  Int   @id @default(autoincrement())
+  name                String
+  user_preference_id  Int
+  userPreferences     UserPreferences @relation(fields: [user_preference_id], references: [user_preferences_id], onDelete: Cascade)
+}
+
+model IngredientToAvoid {
+  id                  Int   @id @default(autoincrement())
+  name                String
+  user_preference_id  Int
+  userPreferences     UserPreferences @relation(fields: [user_preference_id], references: [user_preferences_id], onDelete: Cascade)
+}

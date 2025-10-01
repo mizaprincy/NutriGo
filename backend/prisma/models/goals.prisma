@@ -1,0 +1,15 @@
+enum GoalType {
+  GAIN_WEIGHT
+  LOSE_WEIGHT
+  MAINTAIN_WEIGHT
+}
+
+model GoalHistory {
+  goal_history_id     Int   @id @default(autoincrement())
+  goal_type           GoalType
+  start_date          DateTime
+  end_date            DateTime?
+  target_weight_change Float?
+  user_id             Int
+  user                User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}

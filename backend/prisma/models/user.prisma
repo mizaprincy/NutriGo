@@ -1,0 +1,32 @@
+enum Role {
+  Admin
+  User
+}
+
+model User {
+  user_id         Int                        @id @default(autoincrement())
+  email           String                     @unique
+  first_name      String?
+  last_name       String
+  gender          String
+  date_of_birth   DateTime
+  password        String
+  role            Role                       @default(User)
+  authProviders   AuthProvider[]
+  goalHistories   GoalHistory[]
+  preferences     UserPreferences?
+  activities      ActivityEntry[]
+  weights         WeightEntry[]
+  ingredients     UserIngredient[]
+  notifications   Notification[]
+  recommendations Recommendation[]
+  userRecipeRecos UserRecipeRecommendation[]
+}
+
+model AuthProvider {
+  auth_provider_id Int    @id @default(autoincrement())
+  provider_name    String
+  provider_user_id String
+  user_id          Int
+  user             User   @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}

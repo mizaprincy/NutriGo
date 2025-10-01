@@ -1,0 +1,30 @@
+model Unit {
+  id    Int   @id @default(autoincrement())
+  name  String
+  userIngredients UserIngredient[]
+  recipeIngredients RecipeIngredient[]
+}
+
+model Ingredient {
+  ingredient_id  Int   @id @default(autoincrement())
+  name           String
+  calories       Float
+  protein        Float
+  carbs          Float
+  fat            Float
+  userIngredients UserIngredient[]
+  recipeIngredients RecipeIngredient[]
+}
+
+model UserIngredient {
+  user_ingredient_id Int   @id @default(autoincrement())
+  quantity           Float
+  expiry_date        DateTime?
+  unit               String?
+  user_id            Int
+  ingredient_id      Int
+  unit_id            Int
+  user               User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  ingredient         Ingredient @relation(fields: [ingredient_id], references: [ingredient_id], onDelete: Cascade)
+  unitRel            Unit @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+}

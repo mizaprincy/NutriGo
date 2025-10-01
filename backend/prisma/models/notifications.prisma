@@ -1,0 +1,9 @@
+model Notification {
+  notification_id Int   @id @default(autoincrement())
+  type            String
+  message         String
+  date            DateTime
+  is_read         Boolean
+  user_id         Int
+  user            User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}

@@ -1,0 +1,19 @@
+model ActivityEntry {
+  activity_entry_id   Int   @id @default(autoincrement())
+  type                String
+  duration            Float
+  intensity           String
+  calories_burned     Float
+  date                DateTime
+  is_unexpected       Boolean?
+  user_id             Int
+  user                User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}
+
+model WeightEntry {
+  weight_entry_id     Int   @id @default(autoincrement())
+  weight              Float
+  date                DateTime
+  user_id             Int
+  user                User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}

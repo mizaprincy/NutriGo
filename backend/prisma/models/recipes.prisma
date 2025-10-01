@@ -1,0 +1,41 @@
+model Recipe {
+  recipe_id       Int   @id @default(autoincrement())
+  name            String
+  description     String?
+  source          String?
+  day_planned     DateTime?
+  recipeIngredients RecipeIngredient[]
+  recommendations Recommendation[]
+  userRecipeRecommendations UserRecipeRecommendation[]
+}
+
+model RecipeIngredient {
+  recipe_ingredient_id Int   @id @default(autoincrement())
+  quantity             Float
+  unit                 String?
+  recipe_id            Int
+  ingredient_id        Int
+  unit_id              Int
+  recipe               Recipe @relation(fields: [recipe_id], references: [recipe_id], onDelete: Cascade)
+  ingredient           Ingredient @relation(fields: [ingredient_id], references: [ingredient_id], onDelete: Cascade)
+  unitRel              Unit @relation(fields: [unit_id], references: [id], onDelete: Cascade)
+}
+
+model Recommendation {
+  recommendation_id Int   @id @default(autoincrement())
+  date              DateTime
+  context           String
+  user_id           Int
+  recipe_id         Int
+  user              User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  recipe            Recipe @relation(fields: [recipe_id], references: [recipe_id], onDelete: Cascade)
+}
+
+model UserRecipeRecommendation {
+  user_recipe_reco_id Int   @id @default(autoincrement())
+  date_reco           DateTime
+  user_id             Int
+  recipe_id           Int
+  user                User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  recipe              Recipe @relation(fields: [recipe_id], references: [recipe_id], onDelete: Cascade)
+}
